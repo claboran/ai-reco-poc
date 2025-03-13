@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: ai-reco-poc
+  # Temporary removed
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      embedding:
+        options:
+          model: nomic-embed-text
+    vectorstore:
+      chroma:
+        initialize-schema: true
+        collection-name: products
+        client:
+          host: http://localhost # Use 'chroma' if Spring Boot is in the *same* Docker Compose
+          port: 8444     # Chroma's default API port
+dataLoader:
+  inputFile: "data/products.json"
+
+server:
+  port: 9944

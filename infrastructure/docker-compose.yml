@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  chroma:
+    image: chromadb/chroma:0.5.23    # Version 0.6.3 seems to be broken for Spring AI
+    container_name: chroma-db
+    ports:
+      - "8444:8000"
+    volumes:
+      - chromadata:/chroma/chroma
+
+# You could create different volumes for working with different LLMMs
+volumes:
+  chromadata:

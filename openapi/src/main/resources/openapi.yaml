@@ -1,0 +1,61 @@
+openapi: 3.0.1
+info:
+  title: Product API
+  version: 1.0.0
+
+tags:
+  - name: ProductRecommendation
+
+paths:
+  /api/products/recommend:
+    post:  # Changed to POST
+      summary: Recommend products
+      operationId: getProductRecommendations
+      tags: # Keep this tag here as well
+        - ProductRecommendation
+      requestBody:  # Added requestBody
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'  # Refer to a separate schema
+      responses:
+        '200':
+          description: A list of recommended products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '400':  # Added Bad Request response
+          description: Invalid request (e.g., missing query)
+        '500': #Added Internal server error.
+          description: Internal Server Error
+
+components:
+  schemas:
+    SearchRequest:  # New schema for the request body
+      type: object
+      properties:
+        query:
+          type: string
+          description: The search query
+          minLength: 1  # Enforce non-empty query
+      required:
+        - query  # Make the query field required
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid  # Validate as UUID
+        description:
+          type: string
+        category:
+          type: string
+      required:  # Make all fields required
+        - id
+        - description
+        - category

@@ -1,0 +1,49 @@
+plugins {
+    id 'org.openapi.generator' version '7.4.0'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+def springBootVersion = project.rootProject.ext.springBootVersion
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:2.4.0"
+
+    // The following are needed for spring generator
+    implementation "io.swagger.core.v3:swagger-annotations:2.2.20"
+    implementation "org.openapitools:jackson-databind-nullable:0.2.6"
+    implementation "jakarta.annotation:jakarta.annotation-api:2.1.1"
+
+    compileOnly 'org.projectlombok:lombok:1.18.30' // Still use compileOnly
+
+}
+
+openApiGenerate {
+    generatorName = 'spring'
+    inputSpec = "$projectDir/src/main/resources/openapi.yaml"
+    outputDir = project.layout.buildDirectory.dir("generated").get().asFile.absolutePath
+    apiPackage = 'de.ecompiraten.aireco.api'
+    modelPackage = 'de.ecompiraten.aireco.model.dto'
+    modelNameSuffix = 'Dto'
+    configOptions = [
+            interfaceOnly      : 'true',
+            dateLibrary        : 'java8',
+            useTags            : 'true',
+            delegatePattern    : 'false',
+            useSpringBoot3     : 'true',
+            openApiNullable    : 'false',
+            exceptionHandler: 'false'
+    ]
+}
+
+compileKotlin.dependsOn tasks.openApiGenerate // Use tasks.openApiGenerate
+
+sourceSets {
+    main {
+        java {
+            srcDir "$buildDir/generated/src/main/java"
+        }
+    }
+}
