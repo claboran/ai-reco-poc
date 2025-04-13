@@ -1,0 +1,8 @@
+.openapi-generator-ignore
+apis/ProductRecommendationApi.ts
+apis/index.ts
+index.ts
+models/Product.ts
+models/SearchRequest.ts
+models/index.ts
+runtime.ts

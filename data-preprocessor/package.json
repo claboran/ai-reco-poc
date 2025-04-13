@@ -5,7 +5,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc",
-    "copy-to-backend": "copyfiles ./data/products.json ../src/main/resources"
+    "copy-to-backend": "copyfiles ./data/products.json ../src/main/resources",
+    "copy-to-frontend": "copyfiles ./data/products.json ../ai-reco-ui/ai-reco-app/src/server"
   },
   "keywords": [],
   "author": "",

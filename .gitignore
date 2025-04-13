@@ -41,3 +41,8 @@ out/
 /data-preprocessor/node_modules/
 /data-preprocessor/data/products.json
 /src/main/resources/data/products.json
+/ai-reco-ui/node_modules/
+/ai-reco-ui/dist/
+/ai-reco-ui/.nx/
+/ai-reco-ui/openapi-generator-cli/openapi-generator-cli.jar
+/ai-reco-ui/ai-reco-app/src/server/data/products.json

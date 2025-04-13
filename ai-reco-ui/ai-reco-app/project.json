@@ -1,0 +1,57 @@
+{
+  "name": "ai-reco-app",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@analogjs/platform:vite",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      },
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/ai-reco-app/.nitro",
+        "{workspaceRoot}/dist/ai-reco-app/ssr",
+        "{workspaceRoot}/dist/ai-reco-app/analog"
+      ],
+      "options": {
+        "main": "ai-reco-app/src/main.ts",
+        "configFile": "ai-reco-app/vite.config.ts",
+        "outputPath": "dist/ai-reco-app/client",
+        "tsConfig": "ai-reco-app/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@analogjs/platform:vite-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "ai-reco-app:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "ai-reco-app:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "ai-reco-app:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test",
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "tags": [],
+  "sourceRoot": "./ai-reco-app/src"
+}
