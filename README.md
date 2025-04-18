@@ -92,7 +92,7 @@ cd ai-reco-ui/openapi-generator-cli
 # Using curl
  curl -Lo openapi-generator-cli.jar https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.12.0/openapi-generator-cli-7.12.0.jar # Check for latest generator version
 # Or using wget
-# wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.4.0/openapi-generator-cli-7.12.0.jar -O openapi-generator-cli.jar
+# wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.12.0/openapi-generator-cli-7.12.0.jar -O openapi-generator-cli.jar
 cd ..
 npm run generate:client
 ```
