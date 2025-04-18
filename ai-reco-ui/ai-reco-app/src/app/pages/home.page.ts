@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { HeaderComponent } from "../components/header.component";
 import { FooterComponent } from "../components/footer.component";
-import { RouterOutlet } from "@angular/router";
+import { Router, RouterOutlet } from "@angular/router";
 import { RecommendationStore } from "../common/recommendation.store";
 
 @Component({
@@ -37,6 +37,7 @@ import { RecommendationStore } from "../common/recommendation.store";
 })
 export default class HomeLayoutComponent {
   readonly store = inject(RecommendationStore);
+  readonly #router = inject(Router);
 
   onClear() {
     this.store.resetRecommendation();
@@ -44,5 +45,8 @@ export default class HomeLayoutComponent {
 
   onSubmit(query: string) {
     this.store.queryRecommendations({ query });
+    if (this.#router.url !== '/') {
+      this.#router.navigate(['/']);
+    }
   }
 }

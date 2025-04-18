@@ -16,8 +16,12 @@ class SearchController(
     private val searchService: SearchService,
 ) : ProductRecommendationApi, LoggingAware {
 
-    override fun getProductRecommendations(searchRequestDto: SearchRequestDto?): ResponseEntity<MutableList<ProductDto>> =
-        ResponseEntity.ok(runQuery(searchRequestDto?.query).map { it.toDto() }.toMutableList())
+    override fun getProductRecommendations(
+        searchRequestDto: SearchRequestDto?,
+        ): ResponseEntity<MutableList<ProductDto>> =
+        ResponseEntity.ok(runQuery(searchRequestDto?.query)
+            .map { it.toDto() }
+            .toMutableList())
 
     private fun runQuery(query: String?): List<Product> =
         query?.also { logger().info("Searching for products with query: $query") }

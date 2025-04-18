@@ -12,8 +12,8 @@ import { RouterLink } from "@angular/router";
       <div>{{ product().category }}</div>
       <div class="divider w-full"></div>
       <div>{{ product().description }}</div>
-      <div>
-        <a [routerLink]="['/products', product().id]">View</a>
+      <div class="mt-3">
+        <a [routerLink]="['/products', product().id]" class="btn btn-primary btn-sm">View product</a>
       </div>
     </div>
   `,

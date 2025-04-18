@@ -14,7 +14,6 @@ class AiRecoPocApplication: LoggingAware {
         @JvmStatic
         fun main(args: Array<String>): Unit = when {
             args.contains("--loadEmbeddings") -> runEmbeddingAsCli()
-            args.contains("--deleteEmbeddings") -> runDeleteEmbeddingsAsCli()
             else -> runWebApp()
         }
 
@@ -28,13 +27,6 @@ class AiRecoPocApplication: LoggingAware {
                 webApplicationType = WebApplicationType.NONE
             }
             ctx.getBean(LoadEmbeddingCommand::class.java)
-        }
-
-        private fun runDeleteEmbeddingsAsCli() {
-            runApplication<AiRecoPocApplication> {
-                setAdditionalProfiles(EMBEDDING_PROFILE)
-                webApplicationType = WebApplicationType.NONE
-            }
         }
     }
 }

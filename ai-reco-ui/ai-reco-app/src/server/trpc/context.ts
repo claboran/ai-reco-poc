@@ -1,5 +1,6 @@
 import { inferAsyncReturnType } from '@trpc/server';
 import { Configuration, ProductRecommendationApi } from "../openapi-client";
+import { productService } from "../service/ProductService";
 
 /**
  * Creates context for an incoming request
@@ -14,5 +15,6 @@ export const recommendationApi = new ProductRecommendationApi(config);
 
 export const createContext = () => ({
   recommendationApi: recommendationApi,
+  productService: productService,
 });
 export type Context = inferAsyncReturnType<typeof createContext>;
