@@ -18,8 +18,8 @@ spring:
           model: nomic-embed-text
       chat:
         options:
-          model: mistral:7b-instruct
-          temperature: 0.3
+          model: phi3:mini # you could try mistral:7b-instruct with a more powerful GPU
+          temperature: 0.7
       init:
         timeout: 5m
     vectorstore:

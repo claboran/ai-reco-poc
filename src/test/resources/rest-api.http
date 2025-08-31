@@ -18,12 +18,12 @@ Content-Type: application/json
   "history": [
     {
       "role": "user",
-      "content": "Do you have any drilling stands?"
+      "content": "I am looking for a ceramic mug for coffee"
     },
     {
       "role": "assistant",
-      "content": "Based on the provided context, I couldn't find any information about drilling stands in the listed products. However, I can tell you that one of the listed products is a hammer drill machine (Product ID: f8edff82-7c73-4bcf-b09e-985b51854073), which could potentially be used for drilling holes to install a drilling stand. Please note that I haven't found any information about drilling stands in the provided context, but the hammer drill machine might be useful for such a purpose. If you need further assistance or want to explore more options for drilling stands, feel free to ask!"
+      "content": "It sounds like you're interested in purchasing a stylish ceramic beverage mug suitable for your daily use. Based on the descriptions provided:\n\n1. The first product (ed544b6c-b864-4e8a-aeca-8ed4b169285d) is a household mosquick® ceramic mug designed for both drinking coffee or tea and includes an accompanying lid with spoon. This item offers smart convenience as well as style, making it suitable for your needs at work and home.\n\nAs these descriptions are fictional product IDs without real-world details on availability in specific stores, I recommend visiting the online store where you found them to purchase this mug if they suit your preference. If not available there, checking other e-commerce platforms might yield positive results as well."
     }
   ],
-  "query": "Anything from Black Decker?"
+  "query": "What other products do you have?"
 }
