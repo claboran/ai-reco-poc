@@ -22,7 +22,7 @@ ai-reco-poc/
 
 ### Backend
 - **Language**: Kotlin
-- **Framework**: Spring Boot 3.4
+- **Framework**: Spring Boot 3.5
 - **AI**: Spring AI with Ollama integration
 - **Database**: JPA (likely with an embedded database)
 - **Build**: Gradle
@@ -37,7 +37,7 @@ ai-reco-poc/
 ## Getting Started
 
 ### Prerequisites
-- JDK 17+
+- JDK 21
 - Node.js 18+
 - Gradle
 - Ollama (for AI capabilities)

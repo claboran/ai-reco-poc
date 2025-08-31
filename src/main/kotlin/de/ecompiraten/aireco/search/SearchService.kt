@@ -1,11 +1,13 @@
 package de.ecompiraten.aireco.search
 
+import de.ecompiraten.aireco.config.OnlineProfile
 import de.ecompiraten.aireco.data.Product
 import de.ecompiraten.aireco.util.logging.LoggingAware
 import org.springframework.ai.vectorstore.SearchRequest
 import org.springframework.ai.vectorstore.VectorStore
 import org.springframework.stereotype.Service
 
+@OnlineProfile
 @Service
 class SearchService(
     private val vectorStore: VectorStore,
@@ -17,7 +19,7 @@ class SearchService(
             .query(query)
             .topK(topN)
             .build(),
-    )?.map { document ->
+    ).map { document ->
         // Convert Document back to Product
         Product(
             id = document.id,

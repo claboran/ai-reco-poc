@@ -12,5 +12,5 @@ class LoadEmbeddingCommand(private val applicationContext: ApplicationContext): 
     command = {
         val dataLoader = applicationContext.getBean(DataLoaderService::class.java)
         dataLoader.loadEmbeddings()
-    }
+    },
 )
