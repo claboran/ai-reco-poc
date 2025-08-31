@@ -3,6 +3,7 @@ package de.ecompiraten.aireco.data
 import de.ecompiraten.aireco.config.EmbeddingProfile
 import de.ecompiraten.aireco.util.logging.LoggingAware
 import de.ecompiraten.aireco.util.logging.logger
+import jakarta.annotation.PostConstruct
 import org.springframework.ai.document.Document
 import org.springframework.ai.vectorstore.VectorStore
 import org.springframework.beans.factory.annotation.Value
@@ -14,6 +15,11 @@ class DataLoaderService(
     @Value("\${dataLoader.inputFile}") private val inputFile: String,
     private val vectorStore: VectorStore,
 ) : LoggingAware {
+
+    @PostConstruct
+    fun checkVectorStoreImplementation() {
+        logger().info("[Sanity Check] The injected VectorStore is of type: {}", vectorStore::class.java.name)
+    }
 
     private fun loadDataFromFile(): List<Product> = try {
         ProductListObjectMapper.productListFromJson(inputFile)

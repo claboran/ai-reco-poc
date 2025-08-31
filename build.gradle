@@ -1,9 +1,9 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.9.25'
-    id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
-    id 'org.springframework.boot' version '3.3.0'
+    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
+    id 'org.jetbrains.kotlin.plugin.spring' version '2.0.21'
+    id 'org.springframework.boot' version '3.5.0'
     id 'io.spring.dependency-management' version '1.1.7'
-    id 'org.jetbrains.kotlin.plugin.jpa' version '1.9.25'
+    id 'org.jetbrains.kotlin.plugin.jpa' version '2.0.21'
 }
 
 group = 'de.ecompiraten'
@@ -11,7 +11,18 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+// Ensure all subprojects (like :openapi) also use JDK 21 toolchain
+subprojects { subproj ->
+    plugins.withId('java') {
+        subproj.java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(21)
+            }
+        }
     }
 }
 
@@ -22,33 +33,33 @@ configurations {
 }
 
 ext {
-    set('springBootVersion', "3.3.0")
+    set('springBootVersion', "3.5.5")
 }
 
 dependencies {
-    // Spring AI upgrade to a new version
-    implementation platform("org.springframework.ai:spring-ai-bom:1.0.0-M6")
-    implementation "org.springframework.ai:spring-ai-ollama-spring-boot-starter"
-    implementation 'org.springframework.ai:spring-ai-chroma-store-spring-boot-starter'
+    // Spring AI upgraded to GA
+    implementation platform("org.springframework.ai:spring-ai-bom:1.0.1")
+    implementation "org.springframework.ai:spring-ai-starter-model-ollama"
+    implementation "org.springframework.ai:spring-ai-starter-vector-store-chroma"
 
     // Spring Boot
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // for later use
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa" // for later use
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     // Kotlin
-    implementation 'org.jetbrains.kotlin:kotlin-reflect'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
 
     // Testing
-    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit5"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 
     //Misc
-    implementation 'org.postgresql:postgresql' // for later use
+    implementation "org.postgresql:postgresql" // for later use
     implementation project(':openapi')
 }
 

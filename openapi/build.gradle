@@ -1,32 +1,52 @@
 plugins {
-    id 'org.openapi.generator' version '7.4.0'
-    id 'org.jetbrains.kotlin.jvm'
+    id 'org.openapi.generator' version '7.9.0'
+    id 'java'
 }
 
 def springBootVersion = project.rootProject.ext.springBootVersion
 
+configurations {
+    openapiGenerator
+}
+
 dependencies {
+    constraints {
+        implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+        implementation("org.springframework.boot:spring-boot-starter-validation:${springBootVersion}")
+    }
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
-    implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
-    implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:2.4.0"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2"
+    // Generator CLI pinned to ensure consistent classpath
+    openapiGenerator "org.openapitools:openapi-generator-cli:7.9.0"
+
+    // The following are needed for spring generator output to compile
 
     // The following are needed for spring generator
-    implementation "io.swagger.core.v3:swagger-annotations:2.2.20"
+    implementation "io.swagger.core.v3:swagger-annotations:2.2.22"
     implementation "org.openapitools:jackson-databind-nullable:0.2.6"
-    implementation "jakarta.annotation:jakarta.annotation-api:2.1.1"
+    compileOnly 'org.projectlombok:lombok:1.18.34'
 
-    compileOnly 'org.projectlombok:lombok:1.18.30' // Still use compileOnly
+    compileOnly 'org.projectlombok:lombok:1.18.34' // Still use compileOnly
+}
 
+// Limit Jackson pinning only to the generator CLI's classpath to avoid project-wide conflicts
+configurations.named("openapiGenerator") { cfg ->
+    resolutionStrategy {
+        force 'com.fasterxml.jackson.core:jackson-core:2.17.2',
+              'com.fasterxml.jackson.core:jackson-databind:2.17.2',
+              'com.fasterxml.jackson.core:jackson-annotations:2.17.2'
+    }
 }
 
 openApiGenerate {
     generatorName = 'spring'
-    inputSpec = "$projectDir/src/main/resources/openapi.yaml"
+    inputSpec = file('src/main/resources/openapi.yaml').toString()
     outputDir = project.layout.buildDirectory.dir("generated").get().asFile.absolutePath
     apiPackage = 'de.ecompiraten.aireco.api'
     modelPackage = 'de.ecompiraten.aireco.model.dto'
     modelNameSuffix = 'Dto'
+    library = 'spring-boot'
     configOptions = [
             interfaceOnly      : 'true',
             dateLibrary        : 'java8',
@@ -34,11 +54,12 @@ openApiGenerate {
             delegatePattern    : 'false',
             useSpringBoot3     : 'true',
             openApiNullable    : 'false',
-            exceptionHandler: 'false'
+            exceptionHandler   : 'false'
     ]
 }
 
-compileKotlin.dependsOn tasks.openApiGenerate // Use tasks.openApiGenerate
+// Ensure code is generated before compiling Java sources
+compileJava.dependsOn tasks.openApiGenerate
 
 sourceSets {
     main {

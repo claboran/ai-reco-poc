@@ -35,13 +35,13 @@ This POC utilizes a Spring Boot backend for the AI logic and a separate AnalogJS
 * **Frontend:** AnalogJS, TypeScript, Tailwind CSS (likely, based on Analog setup)
 * **API Definition:** OpenAPI 3
 * **Containerization:** Docker, Docker Compose (for ChromaDB)
-* **Java Version:** JDK 17
+* **Java Version:** JDK 21
 
 ## Quick Start
 
 ### Prerequisites
 
-- JDK 17+
+- JDK 21
 - Node.js 18+
 - Gradle
 - Ollama (for AI capabilities)
