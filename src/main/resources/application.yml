@@ -10,9 +10,18 @@ spring:
   ai:
     ollama:
       base-url: http://localhost:11434
+      restclient:
+        connect-timeout: 10s
+        read-timeout: 5m
       embedding:
         options:
           model: nomic-embed-text
+      chat:
+        options:
+          model: mistral:7b-instruct
+          temperature: 0.3
+      init:
+        timeout: 5m
     vectorstore:
       chroma:
         collection-name: products

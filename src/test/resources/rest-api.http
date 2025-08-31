@@ -1,0 +1,29 @@
+### Start a new conversation with the AI assistant
+# This request sends an empty history to simulate the first turn of a conversation.
+POST http://localhost:9944/api/chat
+Content-Type: application/json
+
+{
+  "history": [],
+  "query": "I am looking for a ceramic mug for coffee"
+}
+
+### Continue a conversation (multi-turn example)
+# To test a follow-up question, copy the response from the previous request
+# and use it to build the history for this new request.
+POST http://localhost:9944/api/chat
+Content-Type: application/json
+
+{
+  "history": [
+    {
+      "role": "user",
+      "content": "Do you have any drilling stands?"
+    },
+    {
+      "role": "assistant",
+      "content": "Based on the provided context, I couldn't find any information about drilling stands in the listed products. However, I can tell you that one of the listed products is a hammer drill machine (Product ID: f8edff82-7c73-4bcf-b09e-985b51854073), which could potentially be used for drilling holes to install a drilling stand. Please note that I haven't found any information about drilling stands in the provided context, but the hammer drill machine might be useful for such a purpose. If you need further assistance or want to explore more options for drilling stands, feel free to ask!"
+    }
+  ],
+  "query": "Anything from Black Decker?"
+}
