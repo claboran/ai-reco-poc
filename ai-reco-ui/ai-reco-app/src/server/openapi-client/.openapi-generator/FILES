@@ -1,7 +1,10 @@
-.openapi-generator-ignore
+apis/ChatApi.ts
 apis/ProductRecommendationApi.ts
 apis/index.ts
 index.ts
+models/ChatMessage.ts
+models/ChatRequest.ts
+models/ChatResponse.ts
 models/Product.ts
 models/SearchRequest.ts
 models/index.ts
