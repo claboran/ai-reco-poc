@@ -22,14 +22,8 @@ class ChatService(
 ) : LoggingAware {
     fun chat(request: ChatRequestDto): ChatResult {
         val (prompt, relevantProducts) = request.buildPromptAndProducts()
+        val conversationHistory: List<Message> = request.toConversationHistory()
 
-        val conversationHistory: List<Message> = request.history.map {
-            when (it.role) {
-                ChatMessageDto.RoleEnum.USER -> UserMessage(it.content)
-                ChatMessageDto.RoleEnum.ASSISTANT -> AssistantMessage(it.content)
-                else -> UserMessage(it.content) // Fallback for safety
-            }
-        }
         val chatClient = chatClientBuilder.build()
         val assistantAnswer = chatClient.prompt()
             .messages(conversationHistory) // Previous turns
@@ -41,19 +35,19 @@ class ChatService(
             answer = assistantAnswer ?: "Sorry, I encountered an error and could not respond.",
             recommendedProducts = relevantProducts,
         ).also {
-            logger().info("Chat completed. Assistant answer: '{}', products: {}", it.answer, it.recommendedProducts)
+            logger().info(
+                "Chat completed. Assistant answer: '{}', products: {}",
+                it.answer,
+                it.recommendedProducts,
+            )
         }
     }
 
     private fun ChatRequestDto.buildPromptAndProducts() = run {
         val relevantProducts = searchService.search(query, topN = 3) ?: emptyList()
-        val context = if (relevantProducts.isEmpty()) {
-            "No relevant products found."
-        } else {
-            relevantProducts.joinToString("\n") {
-                "Product ID: ${it.id}, Category: ${it.category}, Description: ${it.description}"
-            }
-        }
+        val context = relevantProducts.joinToString("\n") {
+            "Product ID: ${it.id}, Category: ${it.category}, Description: ${it.description}"
+        }.takeIf { relevantProducts.isNotEmpty() } ?: "No relevant products found."
         val historyString = history.joinToString("\n") { "${it.role.value}: ${it.content}" }
         val prompt = promptTemplate.create(
             mapOf(
@@ -65,9 +59,18 @@ class ChatService(
         prompt to relevantProducts
     }
 
+    private fun ChatRequestDto.toConversationHistory(): List<Message> =
+        history.map {
+            when (it.role) {
+                ChatMessageDto.RoleEnum.USER -> UserMessage(it.content)
+                ChatMessageDto.RoleEnum.ASSISTANT -> AssistantMessage(it.content)
+                else -> UserMessage(it.content)
+            }
+        }
+
     companion object {
         private val promptTemplate = PromptTemplate(
-                """
+            """
             You are a friendly and helpful e-commerce assistant.
             Answer the user's QUESTION based only on the provided CONTEXT.
             Use the PREVIOUS CONVERSATION for context if the user asks a follow-up question.
