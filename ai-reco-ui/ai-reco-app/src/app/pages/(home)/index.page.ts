@@ -6,7 +6,6 @@
 
 
 @Component({
-  selector: 'aireco-home-page',
   standalone: true,
   imports: [
     ProductQueryListComponent

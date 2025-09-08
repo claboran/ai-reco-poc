@@ -66,5 +66,11 @@ export const RecommendationChatStore = signalStore(
           }),
         )),
     )),
+    clearChat() {
+      patchState(store, state => clearChatHistoryReducer(state));
+    },
+    clearQuery() {
+      patchState(store, state => resetChaRequestReducer(state));
+    },
   })),
 );
