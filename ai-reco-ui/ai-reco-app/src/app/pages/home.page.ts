@@ -16,8 +16,7 @@ import { RecommendationStore } from "../common/recommendation.store";
   template: `
     <div class="flex flex-col h-screen">
       <div class="sticky-header w-full">
-        <aireco-header (reset)="onClear()"
-                       (submitQuery)="onSubmit($event)">
+        <aireco-header>
         </aireco-header>
       </div>
       <div class="container flex-1 mb-3 lg:mb-5 mx-auto">

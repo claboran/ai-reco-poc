@@ -17,11 +17,12 @@ import { RouterLink } from "@angular/router";
           </div>
           <div class="flex justify-between items-center w-full">
             <nav class="flex gap-2">
+              <a class="btn btn-sm" routerLink="/">Home</a>
               <a class="btn btn-sm" routerLink="/chat-recommender">Chat Recommender</a>
               <a class="btn btn-sm" routerLink="/classic-recommender">Classic Recommender</a>
             </nav>
             <div class="flex-1 flex justify-end">
-              <a class="btn btn-sm btn-outline" routerLink="/">Back to search results</a>
+              <a class="btn btn-sm btn-outline" routerLink="/">Home</a>
             </div>
           </div>
         </div>
